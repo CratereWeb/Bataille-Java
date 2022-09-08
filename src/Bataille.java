@@ -1,6 +1,5 @@
 // Programme de jeu principal
 /*
- * TEST
  * Propriétés :
  * - un deck de 62 cartes (4 couleurs, 13 cartes par couleur)
  * - deux joueurs

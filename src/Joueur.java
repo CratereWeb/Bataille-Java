@@ -1,6 +1,5 @@
 
 public class Joueur {
-	// TEST GIT 
 	/*
 	 *  Propriétés :
 	 *		- cartes dans son jeu (tableau)
