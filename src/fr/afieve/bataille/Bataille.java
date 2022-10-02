@@ -17,6 +17,7 @@ package fr.afieve.bataille;
 import java.util.Scanner;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Bataille {
 
@@ -24,52 +25,51 @@ public class Bataille {
 	public static void main(String[] args) {
 		
 		boolean play = false;
-		
-		System.out.println("Bataille de cartes");
-		System.out.println("Pour commencer une nouvelle partie, entrez votre nom et appuyez sur ENTREE.\n");
-		
-		
-		// Initialiser le deck de 52 cartes
-		ArrayList<Card> mainDeck = initMainDeck();
-		// System.out.println(mainDeck);
-		
-		
-		// Création des joueurs
 		Scanner sc = new Scanner(System.in);
-		String playerName = sc.nextLine();
-		if(playerName.length() > 1) {
-			play = true;						
-		}
 		
-		Player player = new Player(playerName, new ArrayList<Card>(), new ArrayList<Card>());			
-		Player computer = new Player("computer", new ArrayList<Card>(), new ArrayList<Card>());
-		
-		System.out.println("\nBienvenue " + player.getName() + "!");
-		
-		// Distribution des cartes du deck équitablement à chaque joueur
-		for(int i = 0; i < mainDeck.size(); i+=2) {
-			computer.addCardToOwnDeck(mainDeck.get(i));
-			player.addCardToOwnDeck(mainDeck.get(i+1));
-		}
-		
-		
+		// Boucle de jeu
+		// , tant que le score d'un joueur n'est pas égal à 52 (compte total des cartes)
 		do {
 			
-			// DO boucle de jeu
-			// WHILE le score d'un joueur n'est pas égal à 52, c'est-à-dire quand il a toutes les cartes
-			do {				
-				// LANCEMENT DU JEU
-				System.out.println("La partie peut commencer ! Vous allez affronter l'ordinateur.");
+			System.out.println("Bataille de cartes");
+			System.out.println("Pour commencer une nouvelle partie, entrez votre nom et appuyez sur ENTREE.\n");			
+			
+			// Initialiser le deck de 52 cartes
+			ArrayList<Card> mainDeck = initMainDeck();
+			// System.out.println(mainDeck);
 				
+			// Création des joueurs
+			String playerName = sc.nextLine();
+			if(playerName.length() > 1) {
+				play = true;						
+			}
+			
+			Player player = new Player(playerName, new ArrayList<Card>(), new ArrayList<Card>());			
+			Player computer = new Player("computer", new ArrayList<Card>(), new ArrayList<Card>());
+			
+			System.out.println("\nBienvenue " + player.getName() + "!");
+			
+			// Distribution des cartes du deck équitablement à chaque joueur
+			for(int i = 0; i < mainDeck.size(); i+=2) {
+				computer.addCardToOwnDeck(mainDeck.get(i));
+				player.addCardToOwnDeck(mainDeck.get(i+1));
+			}
+		
+		
+			// Début de la partie
+			System.out.println("La partie peut commencer ! Vous allez affronter l'ordinateur.");
+			do {
+				// Affichage des scores
 				System.out.println("\n------- SCORES -------");
 				System.out.println("Vous   " + player.getScore() + " - " + computer.getScore() + "   Ordinateur");
 				//player.logCards();
 				//computer.logCards();
 				
+				
 				System.out.println("\nAppuyer sur ENTREE pour tirer une carte.");
-				String nextRound = sc.nextLine();
+				String nextRound = sc.nextLine();				
 				
-				
+				// Manche
 				if(nextRound == "") {
 					
 					Player winner = null;
@@ -117,6 +117,7 @@ public class Bataille {
 				
 			} while (player.getScore() < 52 && computer.getScore() < 52);
 			
+			// Fin de la partie
 			System.out.println("\n\nFIN DE PARTIE !");
 			if(player.getScore() == 52) {
 				System.out.println("\n\nBravo ! Vous remportez la partie !");
@@ -125,24 +126,31 @@ public class Bataille {
 			}
 			
 			
-			
 			play = false;
+			
+			// Proposer une nouvelle partie au joueur
 			System.out.println("\nPour rejouer une partie, appuyez sur + puis sur ENTREE.");
 			System.out.println("Pour quitter le jeu, écrivez 'bye' et appuyer sur ENTREE.");
 			
-			String replayInput = sc.nextLine();
-			if(replayInput == "+") {
-				play = true;
-			} else if(replayInput == "bye" || replayInput == "BYE" || replayInput == "Bye") {
-				play = false;
-			}
+			//List<String> replayInputCommands = new List<String[] {"+","bye","Bye","BYE"};
+			String replayInput = new String();
+			do {
+				replayInput = sc.nextLine();
+				if(replayInput == "+") {
+					play = true;
+				} else if(replayInput == "bye" || replayInput == "BYE" || replayInput == "Bye") {
+					play = false;
+					// Détruire le scanner d'entrée utilisateur
+					System.out.println("Bye bye " + player.getName() + " !");
+					sc.close();
+					System.exit(0);
+				}
+			} while(Arrays.asList("+","bye","Bye","BYE").contains(replayInput));
 			
 			
-		} while(play = true);
-		
-		play = false;
-		sc.close();
-		System.out.println("Bye bye " + player.getName() + " !");
+			
+			
+		} while(play == true);
 				
 	}
 	
@@ -171,6 +179,7 @@ public class Bataille {
 	
 	private static Player fight(Player player, Card playerCard, Player computer, Card computerCard) {
 		
+		// Imprimer la carte du joueur
 		System.out.print("\nVous jouez ");
 		if(playerCard.isCardValueHigh() == true) {
 			System.out.print("" + playerCard.getValueInChar() + playerCard.getColor());
@@ -178,7 +187,7 @@ public class Bataille {
 			System.out.print("" + playerCard.getValue() + playerCard.getColor());
 		}
 		
-		
+		// Imprimer la carte de l'ordinateur
 		System.out.print("\nL'ordinateur joue ");
 		if(computerCard.isCardValueHigh() == true) {
 			System.out.print("" + computerCard.getValueInChar() + computerCard.getColor());
@@ -187,7 +196,7 @@ public class Bataille {
 		}
 		
 		
-		
+		// Comparer les cartes et retourner le vainqueur ou le match nul
 		if(playerCard.getValue() > computerCard.getValue()) {
 			System.out.print("\nVous remportez la manche.");
 			return player;

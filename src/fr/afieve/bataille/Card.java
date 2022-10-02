@@ -9,14 +9,21 @@ public class Card {
 	private int value; // 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 || 10 || 11 || 12 || 13 || 14
 	private char color; // ♥ || ♦ || ♠ || ♣
 	
-	// constructor method
+	// Constructeur
 	public Card(int value, char color) {
 		this.color = color;
 		this.value = value;
 	}
 	
+	public int getValue() {
+		return this.value;
+	}
 	
-	// return card to string
+	public char getColor() {
+		return this.color;
+	}
+	
+	// Retourner la couleur et la valeur de la carte en chaîne de caractères
 	public String toString() {
 		return "" + this.value + this.color;
 	}
@@ -29,26 +36,21 @@ public class Card {
 		}
 	}
 	
+	// Convertir les valeurs hautes en caractères alphabétiques
 	public char getValueInChar() {
-		// Cette fonction est appliquée pour rendre lisible au joueur la valeur de sa carte lorsqu'elle est supérieure à 10 (valet, dame, roi, as)
 		char charV;
 		switch(this.value) {
 			case 11: charV = 'J'; break;
 			case 12: charV = 'Q'; break;
 			case 13: charV = 'K'; break;
 			case 14: charV = 'A'; break;
-			default: return '?'; // ne devrait pas se produire, mais je n'arrive pas à gérer le problème de scope
+			default: return '?'; // ce cas ne devrait pas se produire, mais j'y ai recours car je n'arrive pas à gérer le scope autrement
 		}
 		return charV;
 	}
 	
-	public int getValue() {
-		return this.value;
-	}
+	
 
-	public char getColor() {
-		return this.color;
-	}	
 	
 	
 }

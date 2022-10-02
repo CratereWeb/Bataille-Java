@@ -13,10 +13,10 @@ public class Player {
 	 *		
 	 */
 	private String name;
-	private ArrayList<Card> pile = new ArrayList<Card>();
+	private ArrayList<Card> pile = new ArrayList<Card>(); // Cartes sur la table. Contient plusieurs cartes s'il y a bataille.
 	private ArrayList<Card> deck = new ArrayList<Card>();
 	
-	// constructor method
+	// Constructeur
 	public Player(String name, ArrayList<Card> deck, ArrayList<Card> pile) {
 		this.name = name;
 		this.deck = deck;
@@ -26,10 +26,6 @@ public class Player {
 		return name;
 	}
 	
-	public void addCardToOwnDeck(Card card) {
-		deck.add(card);
-	}
-	
 	public Card getCardFromOwnDeck() {
 		Card card = deck.get(0);
 		this.deck.remove(card);
@@ -37,14 +33,19 @@ public class Player {
 		return card;
 	}
 	
-	public int pileSize() {
-		return this.pile.size();
+	// Ajouter une carte au paquet du joueur
+	public void addCardToOwnDeck(Card card) {
+		deck.add(card);
 	}
 	
 	public ArrayList<Card> getPile() {
 		return this.pile;
 	}
 	
+	public int pileSize() {
+		return this.pile.size();
+	}
+		
 	public void clearPile() {
 		this.pile.clear();
 	}
@@ -53,7 +54,7 @@ public class Player {
 		return this.deck.size();
 	}
 	
-	// logger le tableau des cartes
+	// logger les cartes dans la console, sous forme de tableau des cartes
 	public void logCards() {
 		System.out.print("\n"+this.name);
 		System.out.print("[");
