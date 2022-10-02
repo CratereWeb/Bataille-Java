@@ -13,7 +13,7 @@ package fr.afieve.bataille;
  * 		- Affiche le vainqueur de la partie s'il y en a un
  */
 
-// Importer la class native HashMap (dictionnaire en Java)
+// Import des classes natives utiles
 import java.util.Scanner;
 import java.util.Collections;
 import java.util.ArrayList;
