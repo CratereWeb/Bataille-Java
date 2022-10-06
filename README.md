@@ -1,6 +1,5 @@
 # Bataille
 
-https://esling.github.io/documents/cours1.pdf
 
 Développé en Java.
 1 joueur contre l'ordinateur.
